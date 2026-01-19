@@ -1,13 +1,33 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
-import { Button } from '@/components/Button';
 import { colors } from '@/ui/colors';
 
+function MenuButton({ href, title, style, textStyle }: {
+  href: string;
+  title: string;
+  style?: any;
+  textStyle?: any;
+}) {
+  return (
+    <Link href={href as any} asChild>
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          style,
+          pressed && styles.buttonPressed,
+        ]}
+        accessibilityRole="button"
+      >
+        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+      </Pressable>
+    </Link>
+  );
+}
+
 export default function HomeScreen() {
-  const router = useRouter();
   const { highScore, selectedTheme, isPremium } = useUserStore();
   const theme = getThemeById(selectedTheme);
 
@@ -36,40 +56,34 @@ export default function HomeScreen() {
 
         {/* Menu Buttons */}
         <View style={styles.menuContainer}>
-          <Button
+          <MenuButton
+            href="/game"
             title="PLAY"
-            onPress={() => router.push('/game')}
-            size="large"
-            style={[styles.menuButton, { backgroundColor: theme.colors.accent }]}
-            textStyle={{ color: theme.colors.background }}
+            style={[styles.menuButton, styles.largeButton, { backgroundColor: theme.colors.accent }]}
+            textStyle={[styles.largeText, { color: theme.colors.background }]}
           />
 
-          <Button
+          <MenuButton
+            href="/shop"
             title="THEMES"
-            onPress={() => router.push('/shop')}
-            variant="outline"
-            size="medium"
-            style={[styles.menuButton, { borderColor: theme.colors.accent }]}
+            style={[styles.menuButton, styles.outlineButton, { borderColor: theme.colors.accent }]}
             textStyle={{ color: theme.colors.accent }}
           />
 
           {!isPremium && (
-            <Button
+            <MenuButton
+              href="/paywall"
               title="REMOVE ADS"
-              onPress={() => router.push('/paywall')}
-              variant="gold"
-              size="medium"
-              style={styles.menuButton}
+              style={[styles.menuButton, { backgroundColor: colors.gold }]}
+              textStyle={{ color: colors.background }}
             />
           )}
 
-          <Button
+          <MenuButton
+            href="/settings"
             title="SETTINGS"
-            onPress={() => router.push('/settings')}
-            variant="outline"
-            size="small"
-            style={[styles.menuButton, { borderColor: theme.colors.textSecondary }]}
-            textStyle={{ color: theme.colors.textSecondary }}
+            style={[styles.menuButton, styles.outlineButton, styles.smallButton, { borderColor: theme.colors.textSecondary }]}
+            textStyle={[styles.smallText, { color: theme.colors.textSecondary }]}
           />
         </View>
 
@@ -128,8 +142,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
   },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    minHeight: 48,
+    cursor: 'pointer' as any,
+  },
+  buttonPressed: {
+    opacity: 0.8,
+  },
+  buttonText: {
+    fontWeight: '700',
+    fontSize: 16,
+  },
   menuButton: {
     width: 220,
+  },
+  largeButton: {
+    paddingVertical: 18,
+    minHeight: 56,
+  },
+  largeText: {
+    fontSize: 18,
+  },
+  smallButton: {
+    paddingVertical: 8,
+    minHeight: 36,
+  },
+  smallText: {
+    fontSize: 14,
+  },
+  outlineButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 2,
   },
   premiumBadge: {
     position: 'absolute',

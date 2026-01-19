@@ -57,6 +57,11 @@ export function Button({
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={title}
+      // Web-specific: ensure cursor and click work
+      {...(Platform.OS === 'web' ? {
+        role: 'button',
+        tabIndex: disabled ? -1 : 0,
+      } as any : {})}
     >
       <Text style={textStyles}>{title}</Text>
     </Pressable>
@@ -69,10 +74,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     minWidth: 120,
+    cursor: 'pointer' as any,
   },
   pressed: {
     opacity: 0.8,
-    transform: [{ scale: 0.98 }],
   },
   disabled: {
     opacity: 0.5,
