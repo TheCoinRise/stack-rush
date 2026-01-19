@@ -1,11 +1,19 @@
-import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Switch, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
-import { Button } from '@/components/Button';
 import { colors } from '@/ui/colors';
+
+const safeHaptics = {
+  impact: (style: Haptics.ImpactFeedbackStyle) => {
+    if (Platform.OS !== 'web') Haptics.impactAsync(style);
+  },
+  notification: (type: Haptics.NotificationFeedbackType) => {
+    if (Platform.OS !== 'web') Haptics.notificationAsync(type);
+  },
+};
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -26,19 +34,19 @@ export default function SettingsScreen() {
 
   const handleToggleSound = () => {
     if (hapticEnabled) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      safeHaptics.impact(Haptics.ImpactFeedbackStyle.Light);
     }
     toggleSound();
   };
 
   const handleToggleHaptic = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    safeHaptics.impact(Haptics.ImpactFeedbackStyle.Light);
     toggleHaptic();
   };
 
   const handleReset = () => {
     if (hapticEnabled) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      safeHaptics.notification(Haptics.NotificationFeedbackType.Warning);
     }
     reset();
     router.back();
@@ -139,27 +147,19 @@ export default function SettingsScreen() {
             </Text>
           </View>
           {!isPremium && (
-            <Button
-              title="Upgrade to Premium"
-              onPress={() => {
-                router.back();
-                setTimeout(() => router.push('/paywall'), 100);
-              }}
-              variant="gold"
-              size="medium"
-              style={styles.upgradeButton}
-            />
+            <Link href="/paywall" asChild>
+              <Pressable style={[styles.upgradeButton, { backgroundColor: colors.gold }]}>
+                <Text style={styles.upgradeButtonText}>Upgrade to Premium</Text>
+              </Pressable>
+            </Link>
           )}
         </View>
 
         {/* Reset */}
         <View style={styles.section}>
-          <Button
-            title="Reset All Progress"
-            onPress={handleReset}
-            variant="secondary"
-            size="small"
-          />
+          <Pressable onPress={handleReset} style={styles.resetButton}>
+            <Text style={[styles.resetButtonText, { color: theme.colors.textSecondary }]}>Reset All Progress</Text>
+          </Pressable>
           <Text style={[styles.resetWarning, { color: theme.colors.textSecondary }]}>
             This will erase all scores, coins, and unlocks
           </Text>
@@ -257,6 +257,25 @@ const styles = StyleSheet.create({
   upgradeButton: {
     marginTop: 12,
     alignSelf: 'flex-start',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  upgradeButtonText: {
+    color: colors.background,
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  resetButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: colors.surface,
+    alignSelf: 'center',
+  },
+  resetButtonText: {
+    fontWeight: '600',
+    fontSize: 14,
   },
   resetWarning: {
     fontSize: 12,

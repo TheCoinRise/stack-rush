@@ -7,7 +7,7 @@ export default {
   scheme: "stackrush",
   userInterfaceStyle: "automatic",
   splash: {
-    image: "./assets/splash.png",
+    image: "./assets/logoicon.png",
     resizeMode: "contain",
     backgroundColor: "#1a1a2e"
   },

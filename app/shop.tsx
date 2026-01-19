@@ -1,11 +1,20 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Pressable, FlatList, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { themes, getThemeById } from '@/themes';
 import { colors } from '@/ui/colors';
 import type { Theme } from '@/game/types';
+
+const safeHaptics = {
+  impact: (style: Haptics.ImpactFeedbackStyle) => {
+    if (Platform.OS !== 'web') Haptics.impactAsync(style);
+  },
+  notification: (type: Haptics.NotificationFeedbackType) => {
+    if (Platform.OS !== 'web') Haptics.notificationAsync(type);
+  },
+};
 
 function ThemeCard({ theme, isUnlocked, isSelected, coins, isPremium, onSelect, onBuy }: {
   theme: Theme;
@@ -95,7 +104,7 @@ export default function ShopScreen() {
 
   const handleSelectTheme = (themeId: string) => {
     if (hapticEnabled) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      safeHaptics.impact(Haptics.ImpactFeedbackStyle.Light);
     }
     selectTheme(themeId);
   };
@@ -111,12 +120,12 @@ export default function ShopScreen() {
         unlockTheme(theme.id);
         selectTheme(theme.id);
         if (hapticEnabled) {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          safeHaptics.notification(Haptics.NotificationFeedbackType.Success);
         }
       }
     } else {
       if (hapticEnabled) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        safeHaptics.notification(Haptics.NotificationFeedbackType.Error);
       }
     }
   };

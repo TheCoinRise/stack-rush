@@ -1,31 +1,9 @@
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
 import { colors } from '@/ui/colors';
-
-function MenuButton({ href, title, style, textStyle }: {
-  href: string;
-  title: string;
-  style?: any;
-  textStyle?: any;
-}) {
-  return (
-    <Link href={href as any} asChild>
-      <Pressable
-        style={({ pressed }) => [
-          styles.button,
-          style,
-          pressed && styles.buttonPressed,
-        ]}
-        accessibilityRole="button"
-      >
-        <Text style={[styles.buttonText, textStyle]}>{title}</Text>
-      </Pressable>
-    </Link>
-  );
-}
 
 export default function HomeScreen() {
   const { highScore, selectedTheme, isPremium } = useUserStore();
@@ -56,35 +34,31 @@ export default function HomeScreen() {
 
         {/* Menu Buttons */}
         <View style={styles.menuContainer}>
-          <MenuButton
-            href="/game"
-            title="PLAY"
-            style={[styles.menuButton, styles.largeButton, { backgroundColor: theme.colors.accent }]}
-            textStyle={[styles.largeText, { color: theme.colors.background }]}
-          />
+          <Link href="/game" asChild>
+            <Pressable style={[styles.button, styles.largeButton, { backgroundColor: theme.colors.accent }]}>
+              <Text style={[styles.buttonText, styles.largeText, { color: theme.colors.background }]}>PLAY</Text>
+            </Pressable>
+          </Link>
 
-          <MenuButton
-            href="/shop"
-            title="THEMES"
-            style={[styles.menuButton, styles.outlineButton, { borderColor: theme.colors.accent }]}
-            textStyle={{ color: theme.colors.accent }}
-          />
+          <Link href="/shop" asChild>
+            <Pressable style={[styles.button, styles.outlineButton, { borderColor: theme.colors.accent }]}>
+              <Text style={[styles.buttonText, { color: theme.colors.accent }]}>THEMES</Text>
+            </Pressable>
+          </Link>
 
           {!isPremium && (
-            <MenuButton
-              href="/paywall"
-              title="REMOVE ADS"
-              style={[styles.menuButton, { backgroundColor: colors.gold }]}
-              textStyle={{ color: colors.background }}
-            />
+            <Link href="/paywall" asChild>
+              <Pressable style={[styles.button, { backgroundColor: colors.gold }]}>
+                <Text style={[styles.buttonText, { color: colors.background }]}>REMOVE ADS</Text>
+              </Pressable>
+            </Link>
           )}
 
-          <MenuButton
-            href="/settings"
-            title="SETTINGS"
-            style={[styles.menuButton, styles.outlineButton, styles.smallButton, { borderColor: theme.colors.textSecondary }]}
-            textStyle={[styles.smallText, { color: theme.colors.textSecondary }]}
-          />
+          <Link href="/settings" asChild>
+            <Pressable style={[styles.button, styles.outlineButton, styles.smallButton, { borderColor: theme.colors.textSecondary }]}>
+              <Text style={[styles.buttonText, styles.smallText, { color: theme.colors.textSecondary }]}>SETTINGS</Text>
+            </Pressable>
+          </Link>
         </View>
 
         {/* Premium Badge */}
@@ -143,23 +117,17 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   button: {
+    width: 220,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
     paddingVertical: 14,
     paddingHorizontal: 24,
     minHeight: 48,
-    cursor: 'pointer' as any,
-  },
-  buttonPressed: {
-    opacity: 0.8,
   },
   buttonText: {
     fontWeight: '700',
     fontSize: 16,
-  },
-  menuButton: {
-    width: 220,
   },
   largeButton: {
     paddingVertical: 18,

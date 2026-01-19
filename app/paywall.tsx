@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
-import { Button } from '@/components/Button';
 import { colors } from '@/ui/colors';
 import { purchasePremium, restorePurchases } from '@/services/purchases';
+
+const safeHaptics = {
+  notification: (type: Haptics.NotificationFeedbackType) => {
+    if (Platform.OS !== 'web') Haptics.notificationAsync(type);
+  },
+};
 
 export default function PaywallScreen() {
   const router = useRouter();
@@ -26,7 +31,7 @@ export default function PaywallScreen() {
       if (success) {
         setPremium(true);
         if (hapticEnabled) {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          safeHaptics.notification(Haptics.NotificationFeedbackType.Success);
         }
         router.back();
       } else {
@@ -35,7 +40,7 @@ export default function PaywallScreen() {
     } catch (err) {
       setError('Purchase failed. Please try again.');
       if (hapticEnabled) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        safeHaptics.notification(Haptics.NotificationFeedbackType.Error);
       }
     } finally {
       setIsLoading(false);
@@ -51,7 +56,7 @@ export default function PaywallScreen() {
       if (hasPremium) {
         setPremium(true);
         if (hapticEnabled) {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          safeHaptics.notification(Haptics.NotificationFeedbackType.Success);
         }
         router.back();
       } else {
@@ -71,7 +76,11 @@ export default function PaywallScreen() {
           <Text style={[styles.alreadyPremium, { color: colors.gold }]}>
             You're already Premium!
           </Text>
-          <Button title="Back" onPress={() => router.back()} variant="outline" />
+          <Link href="/" asChild>
+            <Pressable style={[styles.backButton, { borderColor: theme.colors.accent }]}>
+              <Text style={[styles.backButtonText, { color: theme.colors.accent }]}>Back</Text>
+            </Pressable>
+          </Link>
         </View>
       </SafeAreaView>
     );
@@ -146,14 +155,13 @@ export default function PaywallScreen() {
         )}
 
         {/* Purchase Button */}
-        <Button
-          title={isLoading ? 'Processing...' : 'Upgrade Now'}
+        <Pressable
           onPress={handlePurchase}
-          variant="gold"
-          size="large"
           disabled={isLoading}
-          style={styles.purchaseButton}
-        />
+          style={[styles.purchaseButton, { backgroundColor: colors.gold, opacity: isLoading ? 0.6 : 1 }]}
+        >
+          <Text style={styles.purchaseButtonText}>{isLoading ? 'Processing...' : 'Upgrade Now'}</Text>
+        </Pressable>
 
         {isLoading && (
           <ActivityIndicator color={colors.gold} style={styles.loader} />
@@ -275,6 +283,25 @@ const styles = StyleSheet.create({
   purchaseButton: {
     width: '100%',
     marginBottom: 16,
+    paddingVertical: 18,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  purchaseButtonText: {
+    color: colors.background,
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  backButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    borderWidth: 2,
+  },
+  backButtonText: {
+    fontWeight: '700',
+    fontSize: 16,
   },
   loader: {
     marginVertical: 8,
