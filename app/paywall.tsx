@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ActivityIndicator, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
+import { BackButton, LinkButton } from '@/components/LinkButton';
 import { colors } from '@/ui/colors';
 import { purchasePremium, restorePurchases } from '@/services/purchases';
 
@@ -76,11 +77,23 @@ export default function PaywallScreen() {
           <Text style={[styles.alreadyPremium, { color: colors.gold }]}>
             You're already Premium!
           </Text>
-          <Link href="/" asChild>
-            <Pressable style={[styles.backButton, { borderColor: theme.colors.accent }]}>
-              <Text style={[styles.backButtonText, { color: theme.colors.accent }]}>Back</Text>
-            </Pressable>
-          </Link>
+          <LinkButton
+            href="/"
+            title="Back"
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 24,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: theme.colors.accent,
+              borderStyle: 'solid',
+            }}
+            textStyle={{
+              fontWeight: '700',
+              fontSize: 16,
+              color: theme.colors.accent,
+            }}
+          />
         </View>
       </SafeAreaView>
     );
@@ -89,16 +102,10 @@ export default function PaywallScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
+        <BackButton
           style={styles.closeButton}
-          accessibilityLabel="Close paywall"
-          accessibilityRole="button"
-        >
-          <Text style={[styles.closeText, { color: theme.colors.textSecondary }]}>
-            ✕
-          </Text>
-        </Pressable>
+          textStyle={[styles.closeText, { color: theme.colors.textSecondary }]}
+        />
       </View>
 
       <View style={styles.content}>

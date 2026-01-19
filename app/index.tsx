@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { LinkButton } from '@/components/LinkButton';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
 import { colors } from '@/ui/colors';
@@ -34,31 +34,93 @@ export default function HomeScreen() {
 
         {/* Menu Buttons */}
         <View style={styles.menuContainer}>
-          <Link href="/game" asChild>
-            <Pressable style={[styles.button, styles.largeButton, { backgroundColor: theme.colors.accent }]}>
-              <Text style={[styles.buttonText, styles.largeText, { color: theme.colors.background }]}>PLAY</Text>
-            </Pressable>
-          </Link>
+          <LinkButton
+            href="/game"
+            title="PLAY"
+            style={{
+              width: 220,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 12,
+              paddingVertical: 18,
+              paddingHorizontal: 24,
+              minHeight: 56,
+              backgroundColor: theme.colors.accent,
+            }}
+            textStyle={{
+              fontWeight: '700',
+              fontSize: 18,
+              color: theme.colors.background,
+            }}
+          />
 
-          <Link href="/shop" asChild>
-            <Pressable style={[styles.button, styles.outlineButton, { borderColor: theme.colors.accent }]}>
-              <Text style={[styles.buttonText, { color: theme.colors.accent }]}>THEMES</Text>
-            </Pressable>
-          </Link>
+          <LinkButton
+            href="/shop"
+            title="THEMES"
+            style={{
+              width: 220,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 12,
+              paddingVertical: 14,
+              paddingHorizontal: 24,
+              minHeight: 48,
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              borderColor: theme.colors.accent,
+              borderStyle: 'solid',
+            }}
+            textStyle={{
+              fontWeight: '700',
+              fontSize: 16,
+              color: theme.colors.accent,
+            }}
+          />
 
           {!isPremium && (
-            <Link href="/paywall" asChild>
-              <Pressable style={[styles.button, { backgroundColor: colors.gold }]}>
-                <Text style={[styles.buttonText, { color: colors.background }]}>REMOVE ADS</Text>
-              </Pressable>
-            </Link>
+            <LinkButton
+              href="/paywall"
+              title="REMOVE ADS"
+              style={{
+                width: 220,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 12,
+                paddingVertical: 14,
+                paddingHorizontal: 24,
+                minHeight: 48,
+                backgroundColor: colors.gold,
+              }}
+              textStyle={{
+                fontWeight: '700',
+                fontSize: 16,
+                color: colors.background,
+              }}
+            />
           )}
 
-          <Link href="/settings" asChild>
-            <Pressable style={[styles.button, styles.outlineButton, styles.smallButton, { borderColor: theme.colors.textSecondary }]}>
-              <Text style={[styles.buttonText, styles.smallText, { color: theme.colors.textSecondary }]}>SETTINGS</Text>
-            </Pressable>
-          </Link>
+          <LinkButton
+            href="/settings"
+            title="SETTINGS"
+            style={{
+              width: 220,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 12,
+              paddingVertical: 8,
+              paddingHorizontal: 24,
+              minHeight: 36,
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              borderColor: theme.colors.textSecondary,
+              borderStyle: 'solid',
+            }}
+            textStyle={{
+              fontWeight: '700',
+              fontSize: 14,
+              color: theme.colors.textSecondary,
+            }}
+          />
         </View>
 
         {/* Premium Badge */}
@@ -115,37 +177,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     gap: 16,
-  },
-  button: {
-    width: 220,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    minHeight: 48,
-  },
-  buttonText: {
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  largeButton: {
-    paddingVertical: 18,
-    minHeight: 56,
-  },
-  largeText: {
-    fontSize: 18,
-  },
-  smallButton: {
-    paddingVertical: 8,
-    minHeight: 36,
-  },
-  smallText: {
-    fontSize: 14,
-  },
-  outlineButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
   },
   premiumBadge: {
     position: 'absolute',

@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Pressable, FlatList, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { themes, getThemeById } from '@/themes';
+import { BackButton } from '@/components/LinkButton';
 import { colors } from '@/ui/colors';
 import type { Theme } from '@/game/types';
 
@@ -153,16 +154,10 @@ export default function ShopScreen() {
         <Text style={[styles.title, { color: currentTheme.colors.textPrimary }]}>
           Themes
         </Text>
-        <Pressable
-          onPress={() => router.back()}
+        <BackButton
           style={styles.closeButton}
-          accessibilityLabel="Close shop"
-          accessibilityRole="button"
-        >
-          <Text style={[styles.closeText, { color: currentTheme.colors.textSecondary }]}>
-            ✕
-          </Text>
-        </Pressable>
+          textStyle={[styles.closeText, { color: currentTheme.colors.textSecondary }]}
+        />
       </View>
 
       {/* Coin Balance */}

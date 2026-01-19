@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Pressable, Switch, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
+import { BackButton, LinkButton } from '@/components/LinkButton';
 import { colors } from '@/ui/colors';
 
 const safeHaptics = {
@@ -58,16 +59,10 @@ export default function SettingsScreen() {
         <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
           Settings
         </Text>
-        <Pressable
-          onPress={() => router.back()}
+        <BackButton
           style={styles.closeButton}
-          accessibilityLabel="Close settings"
-          accessibilityRole="button"
-        >
-          <Text style={[styles.closeText, { color: theme.colors.textSecondary }]}>
-            ✕
-          </Text>
-        </Pressable>
+          textStyle={[styles.closeText, { color: theme.colors.textSecondary }]}
+        />
       </View>
 
       <View style={styles.content}>
@@ -147,11 +142,22 @@ export default function SettingsScreen() {
             </Text>
           </View>
           {!isPremium && (
-            <Link href="/paywall" asChild>
-              <Pressable style={[styles.upgradeButton, { backgroundColor: colors.gold }]}>
-                <Text style={styles.upgradeButtonText}>Upgrade to Premium</Text>
-              </Pressable>
-            </Link>
+            <LinkButton
+              href="/paywall"
+              title="Upgrade to Premium"
+              style={{
+                marginTop: 12,
+                paddingVertical: 12,
+                paddingHorizontal: 20,
+                borderRadius: 10,
+                backgroundColor: colors.gold,
+              }}
+              textStyle={{
+                color: colors.background,
+                fontWeight: '700',
+                fontSize: 14,
+              }}
+            />
           )}
         </View>
 
