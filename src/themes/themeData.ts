@@ -1,0 +1,177 @@
+import type { Theme } from '../game/types';
+
+export const themes: Theme[] = [
+  {
+    id: 'default',
+    name: 'Classic',
+    price: 0,
+    isPremium: false,
+    colors: {
+      background: '#1a1a2e',
+      blockColors: ['#4ecdc4', '#45b7aa', '#3da292', '#358d7a', '#2d7862'],
+      textPrimary: '#ffffff',
+      textSecondary: '#a0a0a0',
+      accent: '#4ecdc4',
+    },
+  },
+  {
+    id: 'neon',
+    name: 'Neon Nights',
+    price: 0,
+    isPremium: false,
+    colors: {
+      background: '#0d0d0d',
+      blockColors: ['#ff00ff', '#00ffff', '#ff0080', '#80ff00', '#ffff00'],
+      textPrimary: '#ffffff',
+      textSecondary: '#888888',
+      accent: '#ff00ff',
+    },
+  },
+  {
+    id: 'sunset',
+    name: 'Sunset',
+    price: 0,
+    isPremium: false,
+    colors: {
+      background: '#2c1810',
+      blockColors: ['#ff6b6b', '#ffa07a', '#ffd93d', '#ff8c42', '#ff5252'],
+      textPrimary: '#ffffff',
+      textSecondary: '#c4a98a',
+      accent: '#ff6b6b',
+    },
+  },
+  {
+    id: 'ocean',
+    name: 'Deep Ocean',
+    price: 100,
+    isPremium: false,
+    colors: {
+      background: '#0a1628',
+      blockColors: ['#0077b6', '#00b4d8', '#90e0ef', '#48cae4', '#023e8a'],
+      textPrimary: '#ffffff',
+      textSecondary: '#7eb8da',
+      accent: '#00b4d8',
+    },
+  },
+  {
+    id: 'forest',
+    name: 'Forest',
+    price: 100,
+    isPremium: false,
+    colors: {
+      background: '#1a2f1a',
+      blockColors: ['#2d5a27', '#4a7c3f', '#6b9b5e', '#8fbc8f', '#a8d5a2'],
+      textPrimary: '#ffffff',
+      textSecondary: '#98b898',
+      accent: '#6b9b5e',
+    },
+  },
+  {
+    id: 'candy',
+    name: 'Candy Pop',
+    price: 150,
+    isPremium: false,
+    colors: {
+      background: '#2d1f3d',
+      blockColors: ['#ff6f91', '#ff9671', '#ffc75f', '#f9f871', '#d65db1'],
+      textPrimary: '#ffffff',
+      textSecondary: '#c9a8d9',
+      accent: '#ff6f91',
+    },
+  },
+  {
+    id: 'midnight',
+    name: 'Midnight',
+    price: 150,
+    isPremium: false,
+    colors: {
+      background: '#0f0f23',
+      blockColors: ['#4a4e69', '#6c757d', '#9a8c98', '#c9ada7', '#22223b'],
+      textPrimary: '#ffffff',
+      textSecondary: '#6c757d',
+      accent: '#9a8c98',
+    },
+  },
+  {
+    id: 'cherry-blossom',
+    name: 'Cherry Blossom',
+    price: 200,
+    isPremium: false,
+    colors: {
+      background: '#2d2233',
+      blockColors: ['#ffb7c5', '#ff8fab', '#fb6f92', '#e8a0bf', '#ffc2d1'],
+      textPrimary: '#ffffff',
+      textSecondary: '#d9a8c9',
+      accent: '#ffb7c5',
+    },
+  },
+  {
+    id: 'arctic',
+    name: 'Arctic',
+    price: 200,
+    isPremium: false,
+    colors: {
+      background: '#1a2639',
+      blockColors: ['#a8dadc', '#caf0f8', '#90e0ef', '#48cae4', '#e0fbfc'],
+      textPrimary: '#ffffff',
+      textSecondary: '#a8c5d6',
+      accent: '#a8dadc',
+    },
+  },
+  {
+    id: 'volcanic',
+    name: 'Volcanic',
+    price: 250,
+    isPremium: false,
+    colors: {
+      background: '#1a0a0a',
+      blockColors: ['#d00000', '#e85d04', '#f48c06', '#faa307', '#dc2f02'],
+      textPrimary: '#ffffff',
+      textSecondary: '#c97d5d',
+      accent: '#e85d04',
+    },
+  },
+  {
+    id: 'galaxy',
+    name: 'Galaxy',
+    price: 300,
+    isPremium: false,
+    colors: {
+      background: '#0b0014',
+      blockColors: ['#7400b8', '#6930c3', '#5e60ce', '#5390d9', '#4ea8de'],
+      textPrimary: '#ffffff',
+      textSecondary: '#9d8ec9',
+      accent: '#7400b8',
+    },
+  },
+  {
+    id: 'minimalist',
+    name: 'Minimalist',
+    price: 300,
+    isPremium: false,
+    colors: {
+      background: '#f5f5f5',
+      blockColors: ['#333333', '#555555', '#777777', '#999999', '#444444'],
+      textPrimary: '#1a1a1a',
+      textSecondary: '#666666',
+      accent: '#333333',
+    },
+  },
+  {
+    id: 'premium-gold',
+    name: 'Premium Gold',
+    price: 0,
+    isPremium: true,
+    colors: {
+      background: '#1a1510',
+      blockColors: ['#ffd700', '#ffb700', '#ff9500', '#daa520', '#f0c040'],
+      textPrimary: '#ffffff',
+      textSecondary: '#c9a954',
+      accent: '#ffd700',
+    },
+  },
+];
+
+export const getThemeById = (id: string): Theme => {
+  return themes.find((t) => t.id === id) || themes[0];
+};
