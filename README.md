@@ -115,3 +115,4 @@ stack-rush/
 ## License
 
 Proprietary - All rights reserved
+# stack-rush
