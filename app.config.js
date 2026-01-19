@@ -3,7 +3,7 @@ export default {
   slug: "stack-rush",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
+  icon: "./assets/logoicon.png",
   scheme: "stackrush",
   userInterfaceStyle: "automatic",
   splash: {
@@ -15,7 +15,7 @@ export default {
   web: {
     bundler: "metro",
     output: "single",
-    favicon: "./assets/icon.png"
+    favicon: "./assets/logoicon.png"
   },
   ios: {
     supportsTablet: false,
@@ -24,7 +24,7 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/icon.png",
+      foregroundImage: "./assets/logoicon.png",
       backgroundColor: "#1a1a2e"
     },
     package: "com.stackrush.app",
@@ -35,7 +35,7 @@ export default {
   ],
   experiments: {
     typedRoutes: true,
-    baseUrl: "/stackrush"
+    baseUrl: "/stack-rush"
   },
   extra: {
     revenueCatApiKeyIos: process.env.REVENUECAT_IOS_KEY || "appl_PLACEHOLDER",
