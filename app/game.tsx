@@ -7,7 +7,7 @@ import { useGameStore } from '@/stores/gameStore';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
 import { GAME_CONFIG } from '@/game/constants';
-import { Button } from '@/components/Button';
+import { BackButton, ActionButton, LinkButton } from '@/components/LinkButton';
 import { colors } from '@/ui/colors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -165,20 +165,15 @@ export default function GameScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable
-          onPress={() => {
+        <BackButton
+          onBeforeBack={() => {
             stopGameLoop();
             reset();
-            router.back();
           }}
           style={styles.backButton}
-          accessibilityLabel="Back to menu"
-          accessibilityRole="button"
-        >
-          <Text style={[styles.backText, { color: theme.colors.textSecondary }]}>
-            ←
-          </Text>
-        </Pressable>
+          textStyle={[styles.backText, { color: theme.colors.textSecondary }]}
+          label="←"
+        />
 
         <View style={styles.scoreHeader}>
           <Text style={[styles.scoreLabel, { color: theme.colors.textSecondary }]}>
@@ -303,23 +298,42 @@ export default function GameScreen() {
               </View>
 
               <View style={styles.gameOverButtons}>
-                <Button
+                <ActionButton
                   title="PLAY AGAIN"
                   onPress={handleStartGame}
-                  size="large"
-                  style={{ backgroundColor: theme.colors.accent, marginBottom: 12 }}
-                  textStyle={{ color: theme.colors.background }}
-                />
-                <Button
-                  title="MENU"
-                  onPress={() => {
-                    reset();
-                    router.back();
+                  style={{
+                    backgroundColor: theme.colors.accent,
+                    marginBottom: 12,
+                    paddingVertical: 18,
+                    paddingHorizontal: 32,
+                    borderRadius: 12,
+                    minWidth: 180,
+                    alignItems: 'center',
                   }}
-                  variant="outline"
-                  size="medium"
-                  style={{ borderColor: theme.colors.textSecondary }}
-                  textStyle={{ color: theme.colors.textSecondary }}
+                  textStyle={{
+                    color: theme.colors.background,
+                    fontSize: 18,
+                    fontWeight: '700',
+                  }}
+                />
+                <LinkButton
+                  href="/"
+                  title="MENU"
+                  style={{
+                    borderWidth: 2,
+                    borderColor: theme.colors.textSecondary,
+                    borderStyle: 'solid',
+                    paddingVertical: 14,
+                    paddingHorizontal: 24,
+                    borderRadius: 12,
+                    minWidth: 140,
+                    alignItems: 'center',
+                  }}
+                  textStyle={{
+                    color: theme.colors.textSecondary,
+                    fontSize: 16,
+                    fontWeight: '700',
+                  }}
                 />
               </View>
             </View>

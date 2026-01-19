@@ -19,13 +19,16 @@ export function LinkButton({ href, title, style, textStyle }: LinkButtonProps) {
     const path = typeof href === 'string' ? href : (href.pathname || '/');
     const fullPath = `${BASE_URL}${path}`;
 
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      router.push(href);
+    };
+
     return (
       <a
         href={fullPath}
-        onClick={(e) => {
-          e.preventDefault();
-          router.push(href);
-        }}
+        onClick={handleClick}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -55,14 +58,25 @@ interface BackButtonProps {
   style?: ViewStyle;
   textStyle?: TextStyle | TextStyle[];
   label?: string;
+  onBeforeBack?: () => void;
 }
 
-export function BackButton({ style, textStyle, label = '✕' }: BackButtonProps) {
+export function BackButton({ style, textStyle, label = '✕', onBeforeBack }: BackButtonProps) {
   const router = useRouter();
 
   const handleBack = () => {
+    if (onBeforeBack) {
+      onBeforeBack();
+    }
+
     if (Platform.OS === 'web') {
-      window.history.back();
+      // Check if we have history to go back to
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Navigate to home if no history
+        window.location.href = `${BASE_URL}/`;
+      }
     } else {
       router.back();
     }
@@ -71,6 +85,34 @@ export function BackButton({ style, textStyle, label = '✕' }: BackButtonProps)
   return (
     <Pressable onPress={handleBack} style={style} accessibilityRole="button" accessibilityLabel="Go back">
       <Text style={textStyle}>{label}</Text>
+    </Pressable>
+  );
+}
+
+// Action button for non-navigation actions (like "Play Again")
+interface ActionButtonProps {
+  title: string;
+  onPress: () => void;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  disabled?: boolean;
+}
+
+export function ActionButton({ title, onPress, style, textStyle, disabled }: ActionButtonProps) {
+  const handlePress = () => {
+    if (!disabled) {
+      onPress();
+    }
+  };
+
+  return (
+    <Pressable
+      onPress={handlePress}
+      style={[style, disabled && { opacity: 0.5 }]}
+      disabled={disabled}
+      accessibilityRole="button"
+    >
+      <Text style={textStyle}>{title}</Text>
     </Pressable>
   );
 }

@@ -112,7 +112,11 @@ export default function ShopScreen() {
 
   const handleBuyTheme = (theme: Theme) => {
     if (theme.isPremium && !isPremium) {
-      router.push('/paywall');
+      if (Platform.OS === 'web') {
+        window.location.href = '/stack-rush/paywall';
+      } else {
+        router.push('/paywall');
+      }
       return;
     }
 
