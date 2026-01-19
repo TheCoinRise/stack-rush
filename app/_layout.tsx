@@ -1,21 +1,24 @@
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { colors } from '@/ui/colors';
 
-// Keep splash screen visible while loading
-SplashScreen.preventAutoHideAsync();
+// Keep splash screen visible while loading (native only)
+if (Platform.OS !== 'web') {
+  SplashScreen.preventAutoHideAsync();
+}
 
 export default function RootLayout() {
   useEffect(() => {
-    // Hide splash screen after a brief delay
-    const timer = setTimeout(() => {
-      SplashScreen.hideAsync();
-    }, 500);
-
-    return () => clearTimeout(timer);
+    // Hide splash screen after a brief delay (native only)
+    if (Platform.OS !== 'web') {
+      const timer = setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
