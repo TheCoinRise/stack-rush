@@ -14,7 +14,7 @@ export default {
   assetBundlePatterns: ["**/*"],
   web: {
     bundler: "metro",
-    output: "single",
+    output: "static",
     favicon: "./assets/logoicon.png"
   },
   ios: {
