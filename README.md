@@ -1,4 +1,4 @@
-# Stack Rush
+# Stack Rush (still in development)
 
 A precision stacking game where you tap to drop blocks perfectly, build the tallest tower, and unlock stunning themes.
 
