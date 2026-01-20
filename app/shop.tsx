@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { themes, getThemeById } from '@/themes';
-import { BackButton } from '@/components/LinkButton';
+import { WebBackButton } from '@/components/WebButton';
 import { colors } from '@/ui/colors';
 import type { Theme } from '@/game/types';
 
@@ -158,9 +158,9 @@ export default function ShopScreen() {
         <Text style={[styles.title, { color: currentTheme.colors.textPrimary }]}>
           Themes
         </Text>
-        <BackButton
+        <WebBackButton
           style={styles.closeButton}
-          textStyle={[styles.closeText, { color: currentTheme.colors.textSecondary }]}
+          textStyle={{ fontSize: 24, fontWeight: '300', color: currentTheme.colors.textSecondary }}
         />
       </View>
 

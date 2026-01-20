@@ -7,7 +7,7 @@ import { useGameStore } from '@/stores/gameStore';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
 import { GAME_CONFIG } from '@/game/constants';
-import { BackButton, ActionButton, LinkButton } from '@/components/LinkButton';
+import { WebButton, WebBackButton } from '@/components/WebButton';
 import { colors } from '@/ui/colors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -165,13 +165,13 @@ export default function GameScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
-        <BackButton
+        <WebBackButton
           onBeforeBack={() => {
             stopGameLoop();
             reset();
           }}
           style={styles.backButton}
-          textStyle={[styles.backText, { color: theme.colors.textSecondary }]}
+          textStyle={{ fontSize: 28, fontWeight: '300', color: theme.colors.textSecondary }}
           label="←"
         />
 
@@ -251,16 +251,23 @@ export default function GameScreen() {
               <Text style={[styles.promptTitle, { color: theme.colors.textPrimary }]}>
                 TAP TO START
               </Text>
-              <Pressable
+              <WebButton
+                title="PLAY"
                 onPress={handleStartGame}
-                style={[styles.startButton, { backgroundColor: theme.colors.accent }]}
-                accessibilityLabel="Start game"
-                accessibilityRole="button"
-              >
-                <Text style={[styles.startButtonText, { color: theme.colors.background }]}>
-                  PLAY
-                </Text>
-              </Pressable>
+                style={{
+                  backgroundColor: theme.colors.accent,
+                  paddingTop: 16,
+                  paddingBottom: 16,
+                  paddingLeft: 48,
+                  paddingRight: 48,
+                  borderRadius: 12,
+                }}
+                textStyle={{
+                  color: theme.colors.background,
+                  fontSize: 20,
+                  fontWeight: '700',
+                }}
+              />
             </View>
           )}
 
@@ -298,17 +305,18 @@ export default function GameScreen() {
               </View>
 
               <View style={styles.gameOverButtons}>
-                <ActionButton
+                <WebButton
                   title="PLAY AGAIN"
                   onPress={handleStartGame}
                   style={{
                     backgroundColor: theme.colors.accent,
                     marginBottom: 12,
-                    paddingVertical: 18,
-                    paddingHorizontal: 32,
+                    paddingTop: 18,
+                    paddingBottom: 18,
+                    paddingLeft: 32,
+                    paddingRight: 32,
                     borderRadius: 12,
                     minWidth: 180,
-                    alignItems: 'center',
                   }}
                   textStyle={{
                     color: theme.colors.background,
@@ -316,18 +324,18 @@ export default function GameScreen() {
                     fontWeight: '700',
                   }}
                 />
-                <LinkButton
+                <WebButton
                   href="/"
                   title="MENU"
                   style={{
-                    borderWidth: 2,
-                    borderColor: theme.colors.textSecondary,
-                    borderStyle: 'solid',
-                    paddingVertical: 14,
-                    paddingHorizontal: 24,
+                    border: `2px solid ${theme.colors.textSecondary}`,
+                    backgroundColor: 'transparent',
+                    paddingTop: 14,
+                    paddingBottom: 14,
+                    paddingLeft: 24,
+                    paddingRight: 24,
                     borderRadius: 12,
                     minWidth: 140,
-                    alignItems: 'center',
                   }}
                   textStyle={{
                     color: theme.colors.textSecondary,

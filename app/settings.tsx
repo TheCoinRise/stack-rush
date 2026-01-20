@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { useUserStore } from '@/stores/userStore';
 import { getThemeById } from '@/themes';
-import { BackButton, LinkButton } from '@/components/LinkButton';
+import { WebButton, WebBackButton } from '@/components/WebButton';
 import { colors } from '@/ui/colors';
 
 const safeHaptics = {
@@ -59,9 +59,9 @@ export default function SettingsScreen() {
         <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
           Settings
         </Text>
-        <BackButton
+        <WebBackButton
           style={styles.closeButton}
-          textStyle={[styles.closeText, { color: theme.colors.textSecondary }]}
+          textStyle={{ fontSize: 24, fontWeight: '300', color: theme.colors.textSecondary }}
         />
       </View>
 
