@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:thecoinrise.github.io)",
+      "WebFetch(domain:coinrise.info)",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
