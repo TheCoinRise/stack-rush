@@ -35,7 +35,7 @@ export default {
   ],
   experiments: {
     typedRoutes: true,
-    baseUrl: "/stack-rush/web"
+    baseUrl: "/stack-rush"
   },
   extra: {
     revenueCatApiKeyIos: process.env.REVENUECAT_IOS_KEY || "appl_PLACEHOLDER",
