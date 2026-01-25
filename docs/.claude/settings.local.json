@@ -3,7 +3,10 @@
     "allow": [
       "WebFetch(domain:thecoinrise.github.io)",
       "WebFetch(domain:coinrise.info)",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nRemove all remaining stack-rush references\n\nReplace stack-rush with stackrush throughout JS bundles.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)"
     ]
   }
 }
